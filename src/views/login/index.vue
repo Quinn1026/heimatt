@@ -1,10 +1,10 @@
 <template>
   <div class="login">
       <van-nav-bar class="loginTitle" title="登陆" />
-      <van-form>
+      <van-form @submit="onSubmit">
         <van-field
             v-model="loginForm.mobile"
-            name="手机号"
+            name="mobile"
             placeholder="请输入手机号"
             :rules="[{ required: true, message: '请输入手机号' }]"
         >
@@ -14,7 +14,7 @@
         </van-field>
         <van-field
             v-model="loginForm.code"
-            name="验证码"
+            name="code"
             placeholder="请输入验证码"
             :rules="[{ required: true, message: '请输入验证码' }]"
         >
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { author } from '@/api/use'
 export default {
   data () {
     return {
@@ -42,6 +43,12 @@ export default {
         mobile: '',
         code: ''
       }
+    }
+  },
+  methods: {
+    onSubmit (val) {
+      // console.log(val)
+      author(val)
     }
   }
 }
