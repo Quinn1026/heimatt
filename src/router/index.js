@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 // 导入组件
 import MyVant from '@/views/vant'
 import Login from '@/views/login'
+import Home from '@/views'
 
 Vue.use(VueRouter)
 
@@ -14,6 +15,10 @@ const routes = [
   {
     path: '/login',
     component: Login
+  },
+  {
+    path: '/home',
+    component: Home
   },
   {
     path: '/',

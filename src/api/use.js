@@ -13,7 +13,7 @@ async function author (obj) {
   if (res.status === 201) {
     localSet(res.data.data.token)
     Toast('登陆成功')
-    router.push('/vant')
+    router.push('/home')
   }
 }
 export { author }
