@@ -2,11 +2,11 @@
 const KEY = 'heimatt'
 // 存储数据到本地
 function localSet (token) {
-  window.localStorage.setItem(KEY, token)
+  window.localStorage.setItem(KEY, JSON.stringify(token))
 }
 // 取出本地数据
 function localGet () {
-  window.localStorage.getItem(KEY)
+  JSON.parse(window.localStorage.getItem(KEY))
 }
 // 删除本地数据
 function localDel () {
