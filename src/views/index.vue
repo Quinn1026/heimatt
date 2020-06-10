@@ -2,8 +2,11 @@
   <div class="home">
     <van-search
     shape="round"
+    left-icon=""
     background="#3296fa"
-    placeholder="搜索"
+    :placeholder="icon"
+    input-align="center"
+    class="iconfont"
     />
     <van-tabs border>
       <van-tab v-for="index in 8" :key="index" :title="'标签 ' + index">
@@ -23,12 +26,13 @@
 export default {
   data () {
     return {
-      active: 0
+      active: 0,
+      icon: '\ue6d0 搜索'
     }
   }
 }
 </script>
 
-<style>
+<style lang="less">
 
 </style>
