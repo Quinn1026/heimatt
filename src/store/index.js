@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userInfo: localGet() || {}
+    userInfo: localGet('heimatt') || {}
   },
   getters: {
     getUserInfo (state) {

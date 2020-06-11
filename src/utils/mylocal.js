@@ -1,16 +1,15 @@
 // 操作数据到本地localStorge
-const KEY = 'heimatt'
 // 存储数据到本地
-function localSet (token) {
-  window.localStorage.setItem(KEY, JSON.stringify(token))
+function localSet (key, val) {
+  window.localStorage.setItem(key, JSON.stringify(val))
 }
 // 取出本地数据
-function localGet () {
-  JSON.parse(window.localStorage.getItem(KEY))
+function localGet (key) {
+  JSON.parse(window.localStorage.getItem(key))
 }
 // 删除本地数据
-function localDel () {
-  window.localStorage.removeItem(KEY)
+function localDel (key) {
+  window.localStorage.removeItem(key)
 }
 // 按需导出
 export { localSet, localGet, localDel }

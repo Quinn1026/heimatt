@@ -59,7 +59,7 @@ export default {
         if (res.status === 201) {
           // localSet(res.data.data.token)
           this.isLoading = false
-          localSet(res.data.data)
+          localSet('heimatt', res.data.data)
           this.$store.commit('setUserInfo', res.data.data)
           this.$toast('登陆成功')
           this.$router.push('/home')
