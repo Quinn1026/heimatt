@@ -5,10 +5,13 @@ import store from './store'
 // 导入样式
 import '@/style/index.css'
 // 导入Vant
-import Vant from 'vant'
+import Vant, { Lazyload } from 'vant'
 import 'vant/lib/index.css'
+// 导入全局过滤器
+import '@/filter/myfilter'
 // 注册组件
 Vue.use(Vant)
+Vue.use(Lazyload)
 
 Vue.config.productionTip = false
 

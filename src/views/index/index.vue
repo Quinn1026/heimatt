@@ -27,24 +27,46 @@
             finished-text="没有更多了"
             @load="onLoad"
           >
-            <van-cell v-for="(val, i) in item.articleList" :key="i" :title="val.title" />
+            <van-cell v-for="(val, i) in item.articleList" :key="i">
+              <template #title>
+                <h4>{{val.title}}</h4>
+                <van-grid :border="false" :column-num="3">
+                  <van-grid-item v-for="(prop, index) in val.cover.images" :key="index">
+                    <van-image :src="prop" v-lazy="prop"/>
+                  </van-grid-item>
+                </van-grid>
+                <div class="articleCellFoot">
+                  <div class="left">
+                    <span>{{val.aut_name}}</span>
+                    <span>{{val.comm_count}}评论</span>
+                    <span>{{val.pubdate | timefilter}}</span>
+                  </div>
+                  <div class="right">
+                    <van-icon name="cross" @click="more(val)" />
+                  </div>
+                </div>
+              </template>
+            </van-cell>
           </van-list>
         </van-pull-refresh>
       </van-tab>
     </van-tabs>
     <!-- 弹出层 -->
-    <channel :show="show" :channelList="channelList"></channel>
+    <channel :show="show" :active.sync="active" :channelList="channelList" ref="channel"></channel>
+    <more ref="more" @delArticle="delArticle" :unlikeID="unlikeID"></more>
   </div>
 </template>
 
 <script>
 import { apiGetChannel } from '@/api/channel'
-import { localGet } from '@/utils/mylocal'
+import { localGet } from '@/utils/mylocal.js'
 import { apiGetArticlList } from '@/api/articles'
 import Channel from './com/channel'
+import More from './com/more'
 export default {
   components: {
-    Channel
+    Channel,
+    More
   },
   data () {
     return {
@@ -55,15 +77,32 @@ export default {
       // refreshing: false, // 组件的刷新状态
       channelList: [],
       active: 0,
-      show: false
+      show: false,
+      unlikeID: 0
     }
   },
   created () {
     this.getChannelList()
   },
   methods: {
+    delArticle (id) {
+      // 获取文章列表
+      const articles = this.channelList[this.active].articleList
+      // 根据id获取要删除文章的索引
+      articles.forEach((item, index) => {
+        if (item.art_id === id) {
+          articles.splice(index, 1)
+        }
+      })
+    },
+    more (val) {
+      this.$refs.more.show = true
+      this.unlikeID = val.art_id
+      console.log(val)
+    },
     showChannel () {
       this.show = true
+      this.$refs.channel.isShow = false
     },
     async getChannelList () {
       try {
@@ -90,6 +129,7 @@ export default {
             }
           }
         }
+        console.log(this.channelList)
       } catch (err) {
         console.log('出错了' + err)
       }
@@ -177,8 +217,9 @@ export default {
       color: #fff
     }
     /deep/ .van-nav-bar__title {
-      width: 80%;
-      max-width: 95%
+      width: 100%;
+      max-width: 100%;
+      margin: 0 50px;
     }
     .van-search {
       padding: 0;
@@ -193,6 +234,13 @@ export default {
     left: 0;
     width: 100%;
     z-index: 9;
+  }
+  .articleCellFoot {
+    display: flex;
+    justify-content: space-between;
+    .left > span {
+      margin-right: 10px;
+    }
   }
 }
 </style>

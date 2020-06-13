@@ -5,7 +5,7 @@ function localSet (key, val) {
 }
 // 取出本地数据
 function localGet (key) {
-  JSON.parse(window.localStorage.getItem(key))
+  return JSON.parse(window.localStorage.getItem(key))
 }
 // 删除本地数据
 function localDel (key) {
