@@ -177,8 +177,9 @@ export default {
       color: #fff
     }
     /deep/ .van-nav-bar__title {
-      width: 80%;
-      max-width: 95%
+      width: 100%;
+      max-width: 100%;
+      margin: 0 50px;
     }
     .van-search {
       padding: 0;
