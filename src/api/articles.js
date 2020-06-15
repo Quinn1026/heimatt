@@ -8,3 +8,15 @@ export function apiGetArticlList (id) {
     }
   })
 }
+export function apiUnlikeArticle (id) {
+  return axios.post('/app/v1_0/article/dislikes', {
+    target: id
+  })
+}
+export function apiReport ({ target, type }) {
+  return axios.post('/app/v1_0/article/reports', {
+    target,
+    type,
+    remark: ''
+  })
+}

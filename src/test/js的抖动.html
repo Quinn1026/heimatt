@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 500px;
+      height: 2000px;
+      background-color: lightgreen;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+  <script>
+    // js函数的防抖
+    // let timer = null;
+    // window.onscroll = function () {
+    //   clearTimeout(timer);
+    //   timer = setTimeout(() => {
+    //     console.log('滚动~~~~')
+    //   }, 1000);
+    // }
+
+    // 防抖封装版
+    // function bounce (callback, wait) {
+    //   let timer = null;
+    //   return function () {
+    //     if (timer) clearTimeout(timer);
+    //     timer = setTimeout(() => {
+    //       callback();
+    //       console.log(this)
+    //     }, wait);
+    //   }
+    // }
+    // window.onscroll = (function () {
+    //   console.log('抖动~~~~')
+    // }, 1000);
+
+    // js函数的节流
+    // let prevTime = Date.now();
+    // window.onscroll = function () {
+    //   let now = Date.now();
+    //   if (now - prevTime > 1000) {
+    //     console.log('流流流~~~')
+    //     // 将初始时间重置
+    //     prevTime = Date.now()
+    //   }
+    // }
+
+    // 节流封装版
+    function throttle (callback, wait) {
+      let start = Date.now();
+      let timer = null;
+      return function () {
+        clearTimeout(timer)
+        let now = Date.now();
+        if (now - start > wait) {
+          callback();
+          start = Date.now();
+        } else {
+          timer = setTimeout(() => {
+            callback();
+          }, wait);
+        }
+      }
+    }
+    window.onscroll = throttle(function () {
+      console.log('抖啊抖~~~')
+    }, 1000);
+  </script>
+</body>
+</html>

@@ -2,11 +2,21 @@
 import Vue from 'vue'
 import axios from 'axios'
 import store from '@/store'
+import JSONBigInt from 'json-bigint'
 // 设置axios基础路径
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn'
 // 设置post请求头 以下是默认
 // axios.defaults.headers.post['Content-Type'] = 'application/json'
-
+// 设置响应数据的处理 把id数值改为bigint类型 来防止数据超过js范围后丢失精度
+axios.defaults.transformResponse = [function (data) {
+  // 对 data 进行任意转换处理
+  // console.log(data)
+  try {
+    return JSONBigInt.parse(data)
+  } catch (err) {
+    return JSON.parse(data)
+  }
+}]
 // 设置请求拦截器
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么

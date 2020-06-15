@@ -6,6 +6,8 @@ import Login from '@/views/login'
 import Home from '@/views/index.vue'
 import Index from '@/views/index/index.vue'
 import Mine from '@/views/mine'
+import Search from '@/views/search'
+import SearchResult from '@/views/searchResult'
 
 Vue.use(VueRouter)
 
@@ -20,11 +22,20 @@ const routes = [
   },
   {
     path: '/home',
+    redirect: '/index',
     component: Home,
     children: [
       {
         path: '/index',
         component: Index
+      },
+      {
+        path: '/search',
+        component: Search
+      },
+      {
+        path: '/searchResult/:key',
+        component: SearchResult
       },
       {
         path: '/mine',
