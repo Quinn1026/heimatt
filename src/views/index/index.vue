@@ -53,7 +53,7 @@
     </van-tabs>
     <!-- 弹出层 -->
     <channel :show="show" :active.sync="active" :channelList="channelList" ref="channel"></channel>
-    <more ref="more" @delArticle="delArticle" :unlikeID="unlikeID"></more>
+    <more ref="more" @delArticle="delArticle" :unlikeID="unlikeID" :authorID="authorID"></more>
   </div>
 </template>
 
@@ -78,7 +78,8 @@ export default {
       channelList: [],
       active: 0,
       show: false,
-      unlikeID: 0
+      unlikeID: 0,
+      authorID: 0
     }
   },
   created () {
@@ -98,7 +99,8 @@ export default {
     more (val) {
       this.$refs.more.show = true
       this.unlikeID = val.art_id
-      console.log(val)
+      this.authorID = val.aut_id
+      // console.log(val)
     },
     showChannel () {
       this.show = true
@@ -129,7 +131,7 @@ export default {
             }
           }
         }
-        console.log(this.channelList)
+        // console.log(this.channelList)
       } catch (err) {
         console.log('出错了' + err)
       }

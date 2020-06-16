@@ -3,6 +3,8 @@ import Vue from 'vue'
 import axios from 'axios'
 import store from '@/store'
 import JSONBigInt from 'json-bigint'
+import { localDel } from './mylocal'
+import router from '@/router'
 // 设置axios基础路径
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn'
 // 设置post请求头 以下是默认
@@ -29,6 +31,21 @@ axios.interceptors.request.use(function (config) {
   return config
 }, function (error) {
   // 对请求错误做些什么
+  return Promise.reject(error)
+})
+// 添加响应拦截器
+axios.interceptors.response.use(function (response) {
+  // 对响应数据做点什么
+  if (response.data.message === 'Token has some errors.') {
+    // 删除本地token 并跳转到首页
+    console.log('I will goto index page~~~')
+    localDel('heimatt')
+    router.push('/login')
+    return
+  }
+  return response
+}, function (error) {
+  // 对响应错误做点什么
   return Promise.reject(error)
 })
 

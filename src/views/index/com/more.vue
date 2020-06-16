@@ -4,7 +4,7 @@
       <van-cell-group v-if="isReport===false">
         <van-cell icon="bill-o" title="不感兴趣" @click="unlike" />
         <van-cell icon="warning-o" title="反馈垃圾内容" is-link @click="isReport=true" />
-        <van-cell icon="delete" title="拉黑作者" />
+        <van-cell icon="delete" title="拉黑作者" @click="delAuthor" />
       </van-cell-group>
       <!-- 反馈垃圾 -->
       <van-cell-group v-else>
@@ -17,8 +17,9 @@
 
 <script>
 import { apiUnlikeArticle, apiReport } from '@/api/articles'
+// import { delAuthor } from '@/api/use'
 export default {
-  props: ['unlikeID'],
+  props: ['unlikeID', 'authorID'],
   data () {
     return {
       show: false,
@@ -37,6 +38,10 @@ export default {
     }
   },
   methods: {
+    async delAuthor () {
+      console.log(this.authorID)
+      // await delAuthor(this.authorID)
+    },
     async unlike () {
       this.$emit('delArticle', this.unlikeID)
       await apiUnlikeArticle(this.unlikeID)

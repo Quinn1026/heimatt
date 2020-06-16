@@ -20,12 +20,12 @@
     <van-cell-group v-else>
       <van-cell title="历史模块" >
         <template #default>
-          <van-icon name="delete" />
+          <van-icon name="delete" @click="delAll" />
         </template>
       </van-cell>
-      <van-cell :title="item" v-for="(item, index) in history" :key="index">
+      <van-cell @click="onSearch(item)" :title="item" v-for="(item, index) in history" :key="index">
         <template #default>
-          <van-icon name="cross" />
+          <van-icon name="cross" @click.stop="delCurrent(index)" />
         </template>
       </van-cell>
     </van-cell-group>
@@ -34,7 +34,7 @@
 
 <script>
 import { apiSuggestion } from '@/api/utils'
-import { localSet, localGet } from '@/utils/mylocal'
+import { localSet, localGet, localDel } from '@/utils/mylocal'
 export default {
   data () {
     return {
@@ -45,10 +45,33 @@ export default {
     }
   },
   methods: {
+    delCurrent (index) {
+      this.history.splice(index, 1)
+      localSet('history', this.history)
+    },
+    delAll () {
+      // this.history.length = 0 // 不是响应式的
+      // 让用户确定是否删除
+      this.$dialog.confirm({
+        title: '提示',
+        message: '是否删除所有历史记录'
+      }).then(() => {
+        // on confirm
+        this.history = []
+        localDel('history')
+      }).catch(() => {
+        // on cancel
+      })
+    },
     onSearch (key) {
       // console.log(key)
       this.$router.push(`/searchResult/${key}`)
-      this.history.push(key)
+      // 判断这个key是否在历史中已存在 已存在则不在存储
+      // if (this.history.includes(key)) return
+      // this.history.push(key) // 最近的历史记录放最上面
+      this.history.unshift(key)
+      // 使用set构造器去重数组
+      this.history = [...new Set(this.history)]
       localSet('history', this.history)
     },
     onCancel () {

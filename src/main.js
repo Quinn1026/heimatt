@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 // 导入样式
 import '@/style/index.css'
-// 导入Vant
+// 导入Vant, 懒加载
 import Vant, { Lazyload } from 'vant'
 import 'vant/lib/index.css'
 // 导入全局过滤器
