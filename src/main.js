@@ -9,9 +9,12 @@ import Vant, { Lazyload } from 'vant'
 import 'vant/lib/index.css'
 // 导入全局过滤器
 import '@/filter/myfilter'
+// 导入自定义插件
+import MyPlugin from '@/utils/myplugin'
 // 注册组件
 Vue.use(Vant)
 Vue.use(Lazyload)
+Vue.use(MyPlugin)
 
 Vue.config.productionTip = false
 

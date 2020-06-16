@@ -62,7 +62,11 @@ export default {
           localSet('heimatt', res.data.data)
           this.$store.commit('setUserInfo', res.data.data)
           this.$toast('登陆成功')
-          this.$router.push('/home')
+          if (this.$route.path === '/login') {
+            this.$router.push('/home')
+          } else {
+            this.$router.back()
+          }
         }
       } catch (error) {
         this.$toast('手机号或验证码有误')

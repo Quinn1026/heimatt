@@ -27,13 +27,19 @@
             <span>{{item.pubdate | timefilter}}</span>
           </div>
           <van-grid direction="horizontal" :column-num="3" icon-size="14px">
-            <van-grid-item icon="comment-o" text="评论" />
-            <van-grid-item icon="like-o" text="点赞" />
-            <van-grid-item icon="certificate" text="分享" />
+            <van-grid-item icon="comment-o" text="评论" @click="comment" />
+            <van-grid-item icon="like-o" text="点赞" @click="like" />
+            <van-grid-item icon="certificate" text="分享" @click="share(item)" />
           </van-grid>
         </template>
       </van-cell>
     </van-list>
+    <van-share-sheet
+      v-model="showShare"
+      title="立即分享给好友"
+      :options="options"
+      @select="onSelect"
+    />
   </div>
 </template>
 
@@ -47,14 +53,42 @@ export default {
       loading: false,
       finished: false,
       page: 1,
-      total: 0
+      total: 0,
+      showShare: false,
+      options: [
+        { name: '微信', icon: 'wechat' },
+        { name: '微博', icon: 'weibo' },
+        { name: '复制链接', icon: 'link' },
+        { name: '分享海报', icon: 'poster' },
+        { name: '二维码', icon: 'qrcode' }
+      ]
     }
   },
-  created () {
-    this.getSearchResult()
-  },
   methods: {
+    share (item) {
+      this.showShare = true
+    },
+    onSelect (option) {
+      this.$toast(option.name)
+      console.log(option)
+      this.showShare = false
+    },
+    like () {
+      if (!this.$login()) return
+      console.log('赞一个~~~')
+    },
+    comment () {
+      // 判断是否登陆
+      const token = this.$store.state.userInfo.token
+      if (token) {
+        console.log('你已登录, 可以评论')
+      } else {
+        this.$toast('你未登录, 请登陆')
+        this.$router.push('/login')
+      }
+    },
     async getSearchResult () {
+      console.log('getResult')
       const res = await apiSearchResult(this.page, this.$route.params.key)
       // console.log(res)
       if (res.status === 200) {
@@ -67,22 +101,17 @@ export default {
       this.$router.back()
     },
     async onLoad () {
-      // 异步更新数据
-      const arr = this.list
-      // console.log(arr)
-      this.page++
+      console.log('onload')
       const res = await apiSearchResult(this.page, this.$route.params.key)
       if (res.status === 200) {
-        this.list = res.data.data.results
+        this.list = [...this.list, ...res.data.data.results]
       }
-      // console.log(this.list)
-      this.list = [...arr, ...this.list]
-
       // 加载状态结束
       this.loading = false
-
+      // 加载完后页码加1 继续加载下一页
+      this.page++
       // 数据全部加载完成
-      if (this.list.length >= this.total) {
+      if (res.data.data.results.length === 0) {
         this.finished = true
       }
     }
@@ -93,6 +122,7 @@ export default {
 <style lang="less" scoped>
 .searchResult {
   margin-top: 46px;
+  margin-bottom: 50px;
   .navBar {
     background-color: #3296fa;
     /deep/ .van-nav-bar__title {

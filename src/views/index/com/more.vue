@@ -17,8 +17,9 @@
 
 <script>
 import { apiUnlikeArticle, apiReport } from '@/api/articles'
-// import { delAuthor } from '@/api/use'
+import { delAuthor } from '@/api/use'
 export default {
+  name: 'more',
   props: ['unlikeID', 'authorID'],
   data () {
     return {
@@ -37,10 +38,18 @@ export default {
       isReport: false
     }
   },
+  inject: ['reload'],
   methods: {
     async delAuthor () {
-      console.log(this.authorID)
-      // await delAuthor(this.authorID)
+      // console.log(this.authorID)
+      try {
+        await delAuthor(this.authorID)
+        this.$toast('拉黑成功')
+        this.reload()
+      } catch (err) {
+        this.$toast(err.message)
+        this.show = false
+      }
     },
     async unlike () {
       this.$emit('delArticle', this.unlikeID)

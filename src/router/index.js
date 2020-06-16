@@ -21,6 +21,10 @@ const routes = [
     component: Login
   },
   {
+    path: '/checklogin',
+    component: Login
+  },
+  {
     path: '/home',
     redirect: '/index',
     component: Home,
