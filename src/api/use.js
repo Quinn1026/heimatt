@@ -20,3 +20,14 @@ export function author (obj) {
 export function delAuthor (id) {
   return axios.post('/app/v1_0/user/blacklists', { target: id })
 }
+export function followings (id) {
+  return axios.post('/app/v1_0/user/followings', {
+    target: id
+  })
+}
+export function disfollowings (id) {
+  return axios({
+    method: 'DELETE',
+    url: `/app/v1_0/user/followings/${id}`
+  })
+}

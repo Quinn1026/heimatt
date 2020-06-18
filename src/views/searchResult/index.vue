@@ -15,16 +15,18 @@
     >
       <van-cell v-for="(item, index) in list" :key="index" :title="item.title" >
         <template #title>
-          <h4>{{item.title}}</h4>
-          <van-grid :border="false" :column-num="3">
-            <van-grid-item v-for="(prop, i) in item.cover.images" :key="i">
-              <van-image :src="prop" v-lazy="prop"/>
-            </van-grid-item>
-          </van-grid>
-          <div class="left">
-            <span>{{item.aut_name}}</span>
-            <span>{{item.comm_count}}评论</span>
-            <span>{{item.pubdate | timefilter}}</span>
+          <div @click="$router.push('/detail/' + item.art_id)">
+            <h4>{{item.title}}</h4>
+            <van-grid :border="false" :column-num="3">
+              <van-grid-item v-for="(prop, i) in item.cover.images" :key="i">
+                <van-image :src="prop" v-lazy="prop"/>
+              </van-grid-item>
+            </van-grid>
+            <div class="left">
+              <span>{{item.aut_name}}</span>
+              <span>{{item.comm_count}}评论</span>
+              <span>{{item.pubdate | timefilter}}</span>
+            </div>
           </div>
           <van-grid direction="horizontal" :column-num="3" icon-size="14px">
             <van-grid-item icon="comment-o" text="评论" @click="comment" />

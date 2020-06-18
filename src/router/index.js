@@ -8,6 +8,7 @@ import Index from '@/views/index/index.vue'
 import Mine from '@/views/mine'
 import Search from '@/views/search'
 import SearchResult from '@/views/searchResult'
+import Detail from '@/views/detail'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,10 @@ const routes = [
   {
     path: '/vant',
     component: MyVant
+  },
+  {
+    path: '/',
+    component: Login
   },
   {
     path: '/login',
@@ -38,18 +43,18 @@ const routes = [
         component: Search
       },
       {
-        path: '/searchResult/:key',
-        component: SearchResult
-      },
-      {
         path: '/mine',
         component: Mine
       }
     ]
   },
   {
-    path: '/',
-    component: Login
+    path: '/detail/:artid',
+    component: Detail
+  },
+  {
+    path: '/searchResult/:key',
+    component: SearchResult
   }
 ]
 

@@ -55,14 +55,14 @@ export default {
       this.isLoading = true
       try {
         const res = await author(val)
-        console.log(res)
+        // console.log(res)
         if (res.status === 201) {
           // localSet(res.data.data.token)
           this.isLoading = false
           localSet('heimatt', res.data.data)
           this.$store.commit('setUserInfo', res.data.data)
           this.$toast('登陆成功')
-          if (this.$route.path === '/login') {
+          if (this.$route.path === '/login' || this.$route.path === '/') {
             this.$router.push('/home')
           } else {
             this.$router.back()
