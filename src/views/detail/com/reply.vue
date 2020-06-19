@@ -19,7 +19,7 @@
         <comment v-for="(item, index) in list" :key="index" :isReply="true" :item="item"></comment>
       </van-list>
       <!-- 底部的write组件 -->
-      <write :isReply="true" :comId="comId"></write>
+      <write :isReply="true" :comId="comId" @addComment="addComment"></write>
     </van-popup>
   </div>
 </template>
@@ -50,6 +50,9 @@ export default {
       if (this.offset === this.endid) {
         this.finished = true
       }
+    },
+    addComment (val) {
+      this.list.unshift(val)
     }
   },
   created () {

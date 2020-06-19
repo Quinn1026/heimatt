@@ -35,9 +35,7 @@ export default {
       })
       console.log(res)
       if (res.status === 201) {
-        if (!this.isReply) {
-          this.$emit('addComment', res.data.data.new_obj)
-        }
+        this.$emit('addComment', res.data.data.new_obj)
         this.value = ''
       }
     }

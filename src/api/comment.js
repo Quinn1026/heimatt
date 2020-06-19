@@ -13,6 +13,6 @@ export function apiAddComment ({ target, content, artId }) {
   return axios.post('/app/v1_0/comments', {
     target,
     content,
-    artId
+    art_id: artId
   })
 }
