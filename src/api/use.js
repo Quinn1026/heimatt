@@ -31,3 +31,6 @@ export function disfollowings (id) {
     url: `/app/v1_0/user/followings/${id}`
   })
 }
+export function apiUserProfile () {
+  return axios.get('/app/v1_0/user/profile')
+}

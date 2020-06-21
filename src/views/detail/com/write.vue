@@ -27,7 +27,7 @@ export default {
     async addComment () {
       console.log(this.comId)
       const target = this.isReply ? this.comId : this.$route.params.artid
-      const artId = this.isReply ? this.$route.params.artid : ''
+      const artId = this.isReply ? this.$route.params.artid : null
       const res = await apiAddComment({
         target: target,
         content: this.value,

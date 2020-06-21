@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 由客户端链接服务器
+        var ws = new WebSocket('wss://echo.websocket.org')
+        // 链接成功的回调
+        ws.onopen = function (evt) {
+            console.log('连接成功')
+            // 客户端给服务器发送消息
+            ws.send('你好, 树先生')
+        }
+        // 客户端接收来自服务器的消息
+        ws.onmessage = function (evt) {
+            console.log(evt)
+            console.log('服务器响应消息:' + evt.data)
+            // 关闭链接
+            ws.close()
+        }
+        // 关闭成功的回调函数
+        ws.onclose = function () {
+            console.log('关闭成功')
+        }
+    </script>
+</body>
+</html>

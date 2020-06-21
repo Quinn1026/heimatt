@@ -9,6 +9,7 @@ import Mine from '@/views/mine'
 import Search from '@/views/search'
 import SearchResult from '@/views/searchResult'
 import Detail from '@/views/detail'
+import UserInfo from '@/views/userinfo'
 
 Vue.use(VueRouter)
 
@@ -55,6 +56,10 @@ const routes = [
   {
     path: '/searchResult/:key',
     component: SearchResult
+  },
+  {
+    path: '/userinfo',
+    component: UserInfo
   }
 ]
 

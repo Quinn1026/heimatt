@@ -11,7 +11,7 @@
             <div class="content" v-html="item.content"></div>
             <div>
               <span class="time">{{item.pubdate | timefilter}}</span>
-              <span v-if="!isReply" class="back" @click="reply(item.com_id)">回复{{item.reply_count}}</span>
+              <span v-if="!isReply" class="back" @click="reply">回复{{item.reply_count}}</span>
             </div>
           </div>
           <div class="like">
@@ -25,28 +25,11 @@
 
 <script>
 import bus from '@/utils/bus'
-import { apiGetComment } from '@/api/comment'
 export default {
-  data () {
-    return {
-      offset: null,
-      limit: 10
-    }
-  },
   props: ['item', 'isReply'],
   methods: {
-    async reply (comid) {
-      // console.log(comid.toString())
-      const res = await apiGetComment({
-        type: 'c',
-        source: comid.toString(),
-        offset: this.offset,
-        limit: this.limit
-      })
-      // console.log(res)
-      if (res.status === 200) {
-        bus.$emit('replyComment', res, comid)
-      }
+    reply () {
+      bus.$emit('replyComment', this.item)
     }
   }
 }
